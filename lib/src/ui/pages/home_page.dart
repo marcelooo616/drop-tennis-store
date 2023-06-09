@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled/src/model/entities/produto.dart';
 import 'package:untitled/src/model/providers/produtos/product_list.dart';
+import 'package:untitled/src/ui/widget/widget_app_drawer.dart';
 import 'package:untitled/src/ui/widget/widget_aviso.dart';
 import 'package:untitled/src/ui/widget/widget_carousel_show_banner.dart';
 import 'package:untitled/src/ui/widget/widget_carrousel_logo_marcas.dart';
@@ -43,15 +44,22 @@ class _HomePageState extends State<HomePage> {
                 elevation: 0,
                 centerTitle: true,
                 //backgroundColor: Colors.black,
-                leading: Container(
-                  decoration: BoxDecoration(
-                      color: PaletaDeCores.backgroundColorSecundary,
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20))
-                  ),
-                  child: Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: Icon(Shop.menu, )
-                  ),
+                leading:Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: PaletaDeCores.backgroundColorSecundary,
+                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), topRight: Radius.circular(20))
+                      ),
+                      child: IconButton(
+                          icon: Icon(Shop.menu,),
+                          onPressed: (){
+                            print('chamando drawe');
+                            Scaffold.of(context).openDrawer();
+                          }
+                      ),
+                    );
+                  },
                 ),
                 title:Text('DROPS', style: TextStyle(fontFamily: 'Drop', fontWeight: FontWeight.bold, ),),
               ),
@@ -59,6 +67,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      drawer: AppDrawer(),
       body: ListView(
         children: [
           Center(

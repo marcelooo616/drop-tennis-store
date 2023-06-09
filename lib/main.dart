@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
        initialRoute: '/',
         routes: {
           '/': (context) => HomeScreenState(),
-          '/home_page': (context) => HomePage(),
+          '/home_page': (context) => HomeScreenState(initialIndex: 0),
           '/produto_detalhes': (context) => ProdutoDetalhes(),
           '/cart': (context) => HomeScreenState(initialIndex: 3),
           '/verTodos': (context) => ListaDeProdutos(),

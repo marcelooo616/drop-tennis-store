@@ -34,6 +34,7 @@ class _HomeScreenStateState extends State<HomeScreenState> {
     HistoricoDePedidos(),
     FavoritosPage(),
     CartPage(),
+
   ];
 
   void selecionarTela(int index) {

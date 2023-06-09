@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/src/ui/widget/widget_app_drawer.dart';
 import 'package:untitled/src/ui/widget/widget_grid_produtos.dart';
+import 'package:untitled/src/util/color/paleta_de_cores.dart';
+import 'package:untitled/src/util/icons/shop_icons.dart';
 
 
 
@@ -25,6 +28,23 @@ class _ListaDeProdutosState extends State<ListaDeProdutos> {
     return Scaffold(
       appBar: AppBar(
         title: Text('lista de produtos'),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return Container(
+              decoration: BoxDecoration(
+                  color: PaletaDeCores.backgroundColorSecundary,
+                  borderRadius: BorderRadius.only(bottomRight: Radius.circular(20), topRight: Radius.circular(20))
+              ),
+              child: IconButton(
+                  icon: Icon(Shop.menu,),
+                  onPressed: (){
+                    print('chamando drawe');
+                    Scaffold.of(context).openDrawer();
+                  }
+              ),
+            );
+          },
+        ),
         actions: [
           PopupMenuButton(
             icon: const Icon(Icons.more_vert),
@@ -52,6 +72,7 @@ class _ListaDeProdutosState extends State<ListaDeProdutos> {
           )
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductGrid(showFavoriteOnly:_showFavoriteOnly ),
     );
   }

@@ -15,6 +15,7 @@ class _FavoritosPageState extends State<FavoritosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text('Favoritos'),
       ),
       body: ProductGrid(showFavoriteOnly:true ),
