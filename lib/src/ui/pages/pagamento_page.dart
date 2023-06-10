@@ -73,95 +73,106 @@ CartaoCredito cartao = CartaoCredito(
         elevation: 0,
         title: Text('Pagamento'),
       ),
-      body: ListView(
-        children: [
-          //Text(provider.cart.toMap().toString()),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25)
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+          final bool isLandscape = orientation == Orientation.landscape;
+          final EdgeInsets padding = isLandscape ? EdgeInsets.symmetric(horizontal: 100) : EdgeInsets.only(left: 15, right: 15);
+          return SingleChildScrollView(
+            child: Padding(
+              padding: padding,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 40, horizontal: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25)
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
 
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  decoration: BoxDecoration(
-                    color: PaletaDeCores.corComplementarPrimaria,
-                    borderRadius: BorderRadius.circular(35)
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          decoration: BoxDecoration(
+                            color: PaletaDeCores.corComplementarPrimaria,
+                            borderRadius: BorderRadius.circular(35)
+                          ),
+                          child: Row(
+                            children: [
+                              Text('Total', style: TextStyle(fontSize: 25, fontFamily: 'Commons', color: PaletaDeCores.backgroundColorSecundary)),
+                              SizedBox(width: 8,),
+                              Chip(label: Text('R\$ ${provider.cart.totalPrice.toStringAsFixed(2)}')),
+                              Spacer(),
+                              Text('${provider.calcularQuantidadeTotalCart()}x', style: TextStyle(fontSize: 25, fontFamily: 'Commons', color: PaletaDeCores.backgroundColorSecundary)),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 25,),
+
+                        SizedBox(height: 25,),
+                        DropViewItens(),
+                      ],
+                    ),
                   ),
-                  child: Row(
+
+
+
+                  SizedBox(height: 50,),
+                  Column(
                     children: [
-                      Text('Total', style: TextStyle(fontSize: 25, fontFamily: 'Commons', color: PaletaDeCores.backgroundColorSecundary)),
-                      SizedBox(width: 8,),
-                      Chip(label: Text('R\$ ${provider.cart.totalPrice.toStringAsFixed(2)}')),
-                      Spacer(),
-                      Text('${provider.calcularQuantidadeTotalCart()}x', style: TextStyle(fontSize: 25, fontFamily: 'Commons', color: PaletaDeCores.backgroundColorSecundary)),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Text('Metodo de pagamento', style: TextStyle(fontSize: 15, fontFamily: 'Commons'),),
+                          ),
+                          Expanded(child: Divider(thickness: 1, height: 1, endIndent: 5, indent: 20,))
+                        ],
+                      ),
+
+                      ButtonsMetodoPagamento(retornaParametroMetodo: atualizarParametroMetodoClassePai,),
+                      MetodoDePagamento(metodo: metodo),
+                      SizedBox(height: 45,),
+                      Container(
+                          height: 30,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: ScrollingText()),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: CupomDescontoInput(),
+                      ),
                     ],
                   ),
-                ),
-                SizedBox(height: 25,),
-
-                SizedBox(height: 25,),
-                DropViewItens(),
-              ],
-            ),
-          ),
 
 
-
-          SizedBox(height: 50,),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text('Metodo de pagamento', style: TextStyle(fontSize: 15, fontFamily: 'Commons'),),
-                  ),
-                  Expanded(child: Divider(thickness: 1, height: 1, endIndent: 5, indent: 20,))
+                  InkWell(
+                    onTap: (){
+                      order.gerarPedido(provider.cart, MetodosDePagamento.CARTAO_DE_CREDITO.toString(), cliente);
+                      Navigator.pushNamed(context, '/historico_de_pedidos');
+                      provider.clear();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal:15 ),
+                      child: Container(
+                        padding: EdgeInsets.all(25),
+                        margin: EdgeInsets.only(top: 25, bottom: 25),
+                        decoration: BoxDecoration(
+                            color: PaletaDeCores.corComplementarPrimaria,
+                            borderRadius: BorderRadius.circular(35)
+                        ),
+                        child: Text('Finalizar Compra', style: TextStyle(fontSize: 25, color: PaletaDeCores.backgroundColorSecundary),),
+                      ),
+                    ),
+                  )
                 ],
               ),
-
-              ButtonsMetodoPagamento(retornaParametroMetodo: atualizarParametroMetodoClassePai,),
-              MetodoDePagamento(metodo: metodo),
-              SizedBox(height: 45,),
-              Container(
-                  height: 30,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      color: Colors.red
-                  ),
-                  child: ScrollingText()),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: CupomDescontoInput(),
-              ),
-            ],
-          ),
-
-
-          InkWell(
-            onTap: (){
-              order.gerarPedido(provider.cart, MetodosDePagamento.CARTAO_DE_CREDITO.toString(), cliente);
-              Navigator.pushNamed(context, '/historico_de_pedidos');
-              provider.clear();
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal:15 ),
-              child: Container(
-                padding: EdgeInsets.all(25),
-                margin: EdgeInsets.only(top: 25, bottom: 25),
-                decoration: BoxDecoration(
-                    color: PaletaDeCores.corComplementarPrimaria,
-                    borderRadius: BorderRadius.circular(35)
-                ),
-                child: Text('Finalizar Compra', style: TextStyle(fontSize: 25, color: PaletaDeCores.backgroundColorSecundary),),
-              ),
             ),
-          )
-        ],
+          );
+        }
       ),
     );
   }

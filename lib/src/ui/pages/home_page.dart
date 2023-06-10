@@ -68,63 +68,75 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       drawer: AppDrawer(),
-      body: ListView(
-        children: [
-          Center(
-            child: Padding(
-                padding: EdgeInsets.only(top: 40, bottom: 20, left: 17, right: 17),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                color: PaletaDeCores.backgroundColorSecundary,
-                ),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    prefixIcon:Icon(Icons.search) ,
-                    hintText: 'Digite sua pesquisa?',
-                    hintStyle: TextStyle(
-                      fontFamily: 'Commons',
-                      color: Colors.grey.shade600
-                    )
+      body: OrientationBuilder(
+        builder: (context, orientation) {
+
+
+          final bool isLandscape = orientation == Orientation.landscape;
+          final doublePadding = isLandscape ? 100.0 : 17.0;
+          final size = isLandscape ? 100.0 : 75.0;
+          final widthCaousel = isLandscape ? 0.7 : 0.8;
+          final heithCaousel = isLandscape ? 200.0 : 150.0;
+
+          return ListView(
+            children: [
+              Center(
+                child: Padding(
+                    padding: EdgeInsets.only(top: 40, bottom: 20, left: doublePadding, right: doublePadding),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                    color: PaletaDeCores.backgroundColorSecundary,
+                    ),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon:Icon(Icons.search) ,
+                        hintText: 'Digite sua pesquisa?',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Commons',
+                          color: Colors.grey.shade600
+                        )
+                      ),
+                      onChanged: (value){
+                        print(value);
+                      },
+                    ),
                   ),
-                  onChanged: (value){
-                    print(value);
-                  },
                 ),
               ),
-            ),
-          ),
-          Padding(
-            padding:EdgeInsets.only( left: 17, right: 17),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+              Padding(
+                padding:EdgeInsets.only( left: doublePadding, right: doublePadding),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.location_on, color: PaletaDeCores.corComplementarPrimaria,),
-                    Text('Enviando para', style: TextStyle(fontFamily: ' Commons_light',color: Colors.grey.shade600),),
-                    Text(' Rua João Tavares, N° 810', style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Commons',),),
+                    Row(
+                      children: [
+                        Icon(Icons.location_on, color: PaletaDeCores.corComplementarPrimaria,),
+                        Text('Enviando para', style: TextStyle(fontFamily: ' Commons_light',color: Colors.grey.shade600),),
+                        Text(' Rua João Tavares, N° 810', style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'Commons',),),
+                      ],
+                    ),
+                    Icon(Icons.chevron_right,),
                   ],
                 ),
-                Icon(Icons.chevron_right,),
-              ],
-            ),
-          ),
-          Container(
-            height: 30,
-            alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: Colors.red
               ),
-              child: ScrollingText()),
-          CarouselLogoMarcas(),
-          CarouselShowBanner(),
-          RowListaItems(
-            descricao: 'Novos Lançamentos',
-            itens: _produtos,
-          ),
-        ],
+              Container(
+                height: 30,
+                alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.red
+                  ),
+                  child: ScrollingText()),
+              CarouselLogoMarcas(sizeOrientationBuilder: size),
+              CarouselShowBanner(carouselOptionsheith: heithCaousel, carouselOptionsWidth: widthCaousel),
+              RowListaItems(
+                descricao: 'Novos Lançamentos',
+                itens: _produtos,
+              ),
+            ],
+          );
+        }
       ),
     );
   }
