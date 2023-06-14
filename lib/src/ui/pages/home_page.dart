@@ -9,7 +9,6 @@ import 'package:untitled/src/ui/widget/widget_carrousel_logo_marcas.dart';
 import 'package:untitled/src/ui/widget/widget_row_lista_items.dart';
 import 'package:untitled/src/util/color/paleta_de_cores.dart';
 import 'package:untitled/src/util/icons/shop_icons.dart';
-import 'package:marquee_widget/marquee_widget.dart';
 
 class HomePage extends StatefulWidget {
 

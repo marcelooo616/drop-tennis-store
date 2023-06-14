@@ -21,6 +21,12 @@ class _CartaoComponenteState extends State<CartaoComponente> {
 
   final TextEditingController nomeTitularController = TextEditingController();
 
+
+  final _numberCardFocus = FocusNode();
+  final _nameHolderFocus = FocusNode();
+  final _expirationDateCardFocus = FocusNode();
+  final _codeSecurityCardFocus = FocusNode();
+
   bool isNumeroValido = false;
   bool isDataValida = false;
   bool isCVVValido = false;
@@ -43,10 +49,16 @@ class _CartaoComponenteState extends State<CartaoComponente> {
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
-          TextField(
+          TextFormField(
             controller: numeroController,
             keyboardType: TextInputType.number,
+            onFieldSubmitted: (_){
+              FocusScope.of(context).requestFocus(_nameHolderFocus);
+            },
             decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: PaletaDeCores.corComplementarPrimaria),
+              ),
               filled: true,
               fillColor: bg,
               hintText: 'Insira o número do cartão',
@@ -68,9 +80,13 @@ class _CartaoComponenteState extends State<CartaoComponente> {
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
-          TextField(
+          TextFormField(
             controller: nomeTitularController,
+            focusNode: _nameHolderFocus,
             decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: PaletaDeCores.corComplementarPrimaria),
+              ),
               hintText: 'Insira o nome do titular',
               filled: true,
               fillColor: bg,
@@ -80,6 +96,9 @@ class _CartaoComponenteState extends State<CartaoComponente> {
                 ),
               ),
             ),
+            onFieldSubmitted: (_){
+              FocusScope.of(context).requestFocus(_expirationDateCardFocus);
+            },
             onChanged: (value) {
               setState(() {
                 isNomeValido = CreditCardValidator.validarNome(value);
@@ -92,10 +111,14 @@ class _CartaoComponenteState extends State<CartaoComponente> {
             style: TextStyle(fontSize: 16),
           ),
           SizedBox(height: 8),
-          TextField(
+          TextFormField(
             controller: dataController,
+            focusNode: _expirationDateCardFocus,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: PaletaDeCores.corComplementarPrimaria),
+              ),
               hintText: 'MM/AA',
               filled: true,
               fillColor: bg,
@@ -105,6 +128,9 @@ class _CartaoComponenteState extends State<CartaoComponente> {
                 ),
               ),
             ),
+            onFieldSubmitted: (_){
+              FocusScope.of(context).requestFocus(_codeSecurityCardFocus);
+            },
             onChanged: (value) {
               setState(() {
                 isDataValida = CreditCardValidator.validateExpirationDate(value);
@@ -112,21 +138,21 @@ class _CartaoComponenteState extends State<CartaoComponente> {
             },
           ),
           SizedBox(height: 16),
-          Text(
-            'Código de Segurança (CVV)',
-            style: TextStyle(fontSize: 16),
-          ),
+          Text('Código de Segurança (CVV)', style: TextStyle(fontSize: 16),),
           SizedBox(height: 8),
-          TextField(
+          TextFormField(
             controller: cvvController,
+            focusNode: _codeSecurityCardFocus,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: PaletaDeCores.corComplementarPrimaria),
+              ),
               hintText: 'Insira o CVV',
               filled: true,
               fillColor: bg,
               border:  OutlineInputBorder(
                 borderSide: BorderSide(
-
                   color: isCVVValido ? Colors.green : Colors.black,
                 ),
               ),
@@ -144,7 +170,6 @@ class _CartaoComponenteState extends State<CartaoComponente> {
           child: TextButton(
               style: ButtonStyle(
                 // Estilo do botão quando estiver desativado
-
                   overlayColor: MaterialStateColor.resolveWith((states) => Colors.transparent),
                   textStyle: MaterialStateProperty.resolveWith((states) => TextStyle(fontSize: 16, color: Colors.grey)),
                   padding: MaterialStateProperty.resolveWith((states) => EdgeInsets.symmetric(vertical: 12, horizontal: 24)),

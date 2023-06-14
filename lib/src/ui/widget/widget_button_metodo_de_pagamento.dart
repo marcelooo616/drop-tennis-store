@@ -29,13 +29,13 @@ class _ButtonsMetodoPagamentoState extends State<ButtonsMetodoPagamento> {
             setState(() {
               metodo = 'Pix';
               widget.retornaParametroMetodo(metodo);
-              selectedIndex = 2;
+              selectedIndex = 0;
             });
             //  print(metodo);
           },
           child: ListTile(
             selectedColor: PaletaDeCores.corComplementarPrimaria,
-            selected: selectedIndex == 2,
+            selected: selectedIndex == 0,
             leading: Icon(Icons.pix),
             title: Text('Pix'),
           ),
@@ -45,12 +45,12 @@ class _ButtonsMetodoPagamentoState extends State<ButtonsMetodoPagamento> {
             setState(() {
               metodo = 'Cartão de credito';
               widget.retornaParametroMetodo(metodo); // Chamar a função de retorno de chamada
-              selectedIndex = 0;
+              selectedIndex = 1;
             });
           },
           child: ListTile(
             selectedColor: PaletaDeCores.corComplementarPrimaria,
-            selected: selectedIndex == 0,
+            selected: selectedIndex == 1,
             leading: Icon(Icons.payment),
             title: Text('Cartão de credito'),
           ),
@@ -60,13 +60,13 @@ class _ButtonsMetodoPagamentoState extends State<ButtonsMetodoPagamento> {
             setState(() {
               metodo = 'Boleto';
               widget.retornaParametroMetodo(metodo);
-              selectedIndex = 1;
+              selectedIndex = 2;
             });
             //print(metodo);
           },
           child: ListTile(
             selectedColor: PaletaDeCores.corComplementarPrimaria,
-            selected: selectedIndex == 1,
+            selected: selectedIndex == 2,
             leading: Icon(Icons.payments_rounded),
             title: Text('Boleto'),
           ),

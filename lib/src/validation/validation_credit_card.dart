@@ -1,4 +1,5 @@
 class CreditCardValidator {
+
   static bool validateCardNumber(String cardNumber) {
     cardNumber = cardNumber.replaceAll(RegExp(r'\D'), '');
 

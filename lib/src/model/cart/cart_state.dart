@@ -13,9 +13,6 @@ class CartState with ChangeNotifier {
   Cart? _cart;
   Cart get cart => _cart!;
 
-
-
-
   bool diff(CartState old) {
     notifyListeners();
     return old._items != _items;
@@ -60,6 +57,8 @@ class CartState with ChangeNotifier {
     String total = soma.toStringAsFixed(2);
     return total;
   }
+
+
   String calcularQuantidadeTotalCart() {
     int soma = 0;
     for (var item in _items) {
@@ -73,7 +72,7 @@ class CartState with ChangeNotifier {
   }
 
 
-adicionarItemAoCarrinho(Produto produto,int quantidade){
+  adicionarItemAoCarrinho(Produto produto,int quantidade){
     Item? prod = obterProduto(produto, quantidade);
     _items.add(prod!);
 }

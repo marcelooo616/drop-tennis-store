@@ -67,7 +67,7 @@ CartaoCredito cartao = CartaoCredito(
   Widget build(BuildContext context) {
     final provider = Provider.of<CartState>(context);
     final order = Provider.of<OrderState>(context);
-    print(metodo);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -90,7 +90,6 @@ CartaoCredito cartao = CartaoCredito(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         Container(
                           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                           decoration: BoxDecoration(
@@ -107,8 +106,6 @@ CartaoCredito cartao = CartaoCredito(
                             ],
                           ),
                         ),
-                        SizedBox(height: 25,),
-
                         SizedBox(height: 25,),
                         DropViewItens(),
                       ],
@@ -148,26 +145,25 @@ CartaoCredito cartao = CartaoCredito(
                     ],
                   ),
 
-
-                  InkWell(
-                    onTap: (){
+                  TextButton(
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      margin: EdgeInsets.only(top: 25, bottom: 25),
+                      decoration: BoxDecoration(
+                          color: PaletaDeCores.corComplementarPrimaria,
+                          borderRadius: BorderRadius.circular(15)
+                      ),
+                      child: Text('Pagar agora', style: TextStyle(fontSize: 25, color: PaletaDeCores.backgroundColorSecundary),),
+                    ),
+                    onPressed: (){
                       order.gerarPedido(provider.cart, MetodosDePagamento.CARTAO_DE_CREDITO.toString(), cliente);
                       Navigator.pushNamed(context, '/historico_de_pedidos');
                       provider.clear();
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal:15 ),
-                      child: Container(
-                        padding: EdgeInsets.all(25),
-                        margin: EdgeInsets.only(top: 25, bottom: 25),
-                        decoration: BoxDecoration(
-                            color: PaletaDeCores.corComplementarPrimaria,
-                            borderRadius: BorderRadius.circular(35)
-                        ),
-                        child: Text('Finalizar Compra', style: TextStyle(fontSize: 25, color: PaletaDeCores.backgroundColorSecundary),),
                       ),
-                    ),
-                  )
+
+
+                 SizedBox(height: 25,)
                 ],
               ),
             ),
